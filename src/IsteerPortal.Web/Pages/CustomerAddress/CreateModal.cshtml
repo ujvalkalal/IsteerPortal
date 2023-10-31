@@ -1,0 +1,35 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using IsteerPortal.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using IsteerPortal.Web.Pages.CustomerAddress
+@using IsteerPortal.CustomerAddress;
+@using System.Globalization
+@inject IHtmlLocalizer<IsteerPortalResource> L
+@model CreateModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/CustomerAddress/CreateModal" autocomplete="off">
+    <abp-modal id="CustomerAddresCreateModal">
+        <abp-modal-header title="@L["NewCustomerAddres"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+                    
+
+            <abp-input asp-for="CustomerAddres.Address1" text-area  />
+
+
+            <abp-input asp-for="CustomerAddres.Address2" text-area  />
+
+
+            <abp-input asp-for="CustomerAddres.ZIPCODE"   />
+
+                                <abp-select asp-for="CustomerAddres.CustomerId" asp-items="Model.CustomerLookupList" label="@L["Customer"].Value"/>
+                
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

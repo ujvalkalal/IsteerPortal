@@ -1,0 +1,38 @@
+@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using IsteerPortal.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using IsteerPortal.Web.Pages.Customers
+@using IsteerPortal.Customers;
+@using System.Globalization
+@inject IHtmlLocalizer<IsteerPortalResource> L
+@model CreateModalModel
+@{
+    Layout = null;
+}
+
+<form data-ajaxForm="true" asp-page="/Customers/CreateModal" autocomplete="off">
+    <abp-modal id="CustomerCreateModal">
+        <abp-modal-header title="@L["NewCustomer"].Value"></abp-modal-header>
+
+        <abp-modal-body>
+                    
+
+            <abp-input asp-for="Customer.Name"   />
+
+
+            <abp-input asp-for="Customer.Website"   />
+
+
+            <abp-input asp-for="Customer.EmailId"   />
+
+
+            <abp-input asp-for="Customer.ContactNumber"   />
+
+                    
+                
+        </abp-modal-body>
+
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

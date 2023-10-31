@@ -1,0 +1,75 @@
+@page
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using IsteerPortal.Permissions
+@using IsteerPortal.Web.Pages.Customers
+@using IsteerPortal.Web.Menus
+@using Microsoft.AspNetCore.Mvc.Localization
+@using IsteerPortal.Localization
+@inject IHtmlLocalizer<IsteerPortalResource> L
+@inject IAuthorizationService Authorization
+@model IndexModel
+@inject IPageLayout PageLayout
+@{
+    PageLayout.Content.Title = L["Customers"].Value;
+    PageLayout.Content.MenuItemName = IsteerPortalMenus.Customers;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Customers/index.js" />
+}
+
+@section content_toolbar {
+    <abp-button id="ExportToExcelButton" text="@L["ExportToExcel"].Value" icon="download" size="Small" button-type="Primary" />
+    @if (await Authorization.IsGrantedAsync(IsteerPortalPermissions.Customers.Create))
+    {
+        <abp-button id="NewCustomerButton" text="@L["NewCustomer"].Value" icon="plus" size="Small" button-type="Primary" />
+    }
+}
+
+<abp-card>
+    <abp-card-body>
+		<abp-row class="mb-3">
+            <abp-column size-md="_12">
+                <form id="SearchForm" autocomplete="off">
+                    <div class="input-group">
+                        <input class="form-control page-search-filter-text" id="FilterText" placeholder="@L["Search"]"/>
+                        <abp-button button-type="Primary" type="submit" icon="search"/>
+                    </div>
+                </form>
+            </abp-column>
+            <abp-column size-md="_12" class="mt-3">
+                <a href="javascript:;" id="AdvancedFilterSectionToggler" class="text-decoration-none">@L["SeeAdvancedFilters"]</a>
+            </abp-column>
+        </abp-row>
+
+        <abp-row id="AdvancedFilterSection" style="display: none;">
+            <abp-column size="_3">
+                <abp-input asp-for="NameFilter" label="@L["Name"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="WebsiteFilter" label="@L["Website"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="EmailIdFilter" label="@L["EmailId"].Value" />
+            </abp-column>
+            <abp-column size="_3">
+                <abp-input asp-for="ContactNumberFilter" label="@L["ContactNumber"].Value" />
+            </abp-column>
+        </abp-row>
+
+        <abp-table striped-rows="true" id="CustomersTable">
+            <thead>
+				<tr>
+					<th>@L["Actions"]</th>
+					<th>@L["Name"]</th>
+					<th>@L["Website"]</th>
+					<th>@L["EmailId"]</th>
+					<th>@L["ContactNumber"]</th>
+
+				</tr>
+            </thead>
+        </abp-table>
+    </abp-card-body>
+</abp-card>
